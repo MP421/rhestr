@@ -2,7 +2,10 @@ const rhestrInputEl = document.querySelector('.rhestr-showcase-preview-demo-main
 const rhestrListEl = document.querySelector('.rhestr-showcase-preview-demo-main-output');
 const clearAllBtn = document.querySelector('.clear');
 const rhestrListItemEntryEl = document.querySelectorAll('.rhestr-list-item');
+const faqToggleBtns = document.querySelectorAll('.rhestr-q-and-a-item-toggle');
+const faqAnswers = document.querySelectorAll('.rhestr-q-and-a-item-answer');
 
+// Live demo functionality
 rhestrInputEl.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && rhestrInputEl.value !== '') {
 
@@ -40,71 +43,18 @@ clearAllBtn.addEventListener('click', () => {
   rhestrListEl.innerHTML = '';
 });
 
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const faqToggleBtns = document.querySelectorAll('.rhestr-q-and-a-item-toggle');
-
+// FAQ toggle functionality
 faqToggleBtns.forEach(faqToggleBtn => {
   faqToggleBtn.addEventListener('click', () => {
+    faqToggleBtn.classList.toggle('turnt');
+
     const parentItem = faqToggleBtn.closest('.rhestr-q-and-a-item');
     if (parentItem) {
       const faqAnswerEl = parentItem.querySelector('.rhestr-q-and-a-item-answer');
-      if (faqAnswerEl) {
+      if (parentItem.querySelector('.rhestr-q-and-a-item-answer')) {
         faqAnswerEl.classList.toggle('active');
-        const chevronToggleExpand = parentItem.querySelector('.fa-chevron-down');
-        const chevronToggleCollapse = parentItem.querySelector('.fa-chevron-up');
-        if (faqAnswerEl.classList.contains('active')) {
-          chevronToggleExpand.style.display = 'none';
-          chevronToggleCollapse.style.display = 'block';
-        } else {
-          chevronToggleExpand.style.display = 'block';
-          chevronToggleCollapse.style.display = 'none';
-        };
       };
     };
+
   });
 });
