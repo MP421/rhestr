@@ -44,17 +44,15 @@ rhestrInputEl.addEventListener('keydown', (e) => {
 
     // Add timestamp to each task list item
     const now = new Date();
-    const hours = now.getHours();
-    const minutes = now.getMinutes();
-    const timestamp = `${hours}:${minutes}`;
-    generateContainerEl.append(timestamp);
-
-    // Add date to each task list item
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
     const date = now.getDate();
     const month = now.getMonth();
     const year = now.getFullYear();
-    const currentDate = `${date} ${months[month]} ${year}`;
-    generateContainerEl.append(currentDate);
+    const timestamp = document.createElement('em');
+    timestamp.textContent = `${hours}:${minutes} - ${date} ${months[month]} ${year}`;
+    timestamp.classList.add('time-stamp');
+    generateContainerEl.append(timestamp);
 
     // Toggle complete status indicator
     generateRhestrListItem.addEventListener('click', () => {
