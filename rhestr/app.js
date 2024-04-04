@@ -1,7 +1,6 @@
 const rhestrInputEl = document.querySelector('.rhestr-showcase-preview-demo-main-input input');
 const rhestrListEl = document.querySelector('.rhestr-showcase-preview-demo-main-output');
 const clearAllBtn = document.querySelector('.clear');
-const rhestrListItemEntryEl = document.querySelectorAll('.rhestr-list-item');
 const faqToggleBtns = document.querySelectorAll('.rhestr-q-and-a-item-toggle');
 const faqAnswers = document.querySelectorAll('.rhestr-q-and-a-item-answer');
 
@@ -24,44 +23,49 @@ const months = [
 rhestrInputEl.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && rhestrInputEl.value !== '') {
 
-    // Generate new container element for rhestr tasks
-    const generateContainerEl = document.createElement('div');
-    generateContainerEl.classList.add('rhestr-showcase-preview-demo-main-output-item');
-    rhestrListEl.append(generateContainerEl);
+    // Generate list element
+    const rhestrListItem = document.createElement('li');
+    rhestrListItem.classList.add('rhestr-list-item');
+    rhestrListEl.append(rhestrListItem);
 
-    // Generate list item element for taking and displaying user input
-    const generateRhestrListItem = document.createElement('li');
-    generateRhestrListItem.classList.add('rhestr-list-item');
-    generateRhestrListItem.textContent = rhestrInputEl.value.trim();
+    // Generate a div to house individual tasks and delete icons
+    const rhestrListItemEntry = document.createElement('div');
+    rhestrListItemEntry.classList.add('rhestr-list-item-entry');
+    rhestrListItem.append(rhestrListItemEntry);
+
+    // Generate p element for displaying user input
+    const rhestrListItemEntryDisplayInput = document.createElement('p');
+    rhestrListItemEntryDisplayInput.classList.add('rhestr-list-item-entry-display-input');
+    rhestrListItemEntryDisplayInput.textContent = rhestrInputEl.value.trim();
     rhestrInputEl.value = '';
-    generateContainerEl.append(generateRhestrListItem);
+    rhestrListItemEntry.append(rhestrListItemEntryDisplayInput);
 
-    // Generate delete icon for each task element
-    const deleteRhestrListItem = document.createElement('span');
-    deleteRhestrListItem.classList.add('rhestr-list-delete');
-    deleteRhestrListItem.innerHTML = '<i class="fa-solid fa-trash"></i>';
-    generateContainerEl.append(deleteRhestrListItem);
+    // Generate span to house delete task icon
+    const rhestrDelete = document.createElement('span');
+    rhestrDelete.classList.add('rhestr-list-item-entry-delete');
+    rhestrDelete.innerHTML = '<i class="fa-solid fa-trash"></i>';
+    rhestrListItemEntry.append(rhestrDelete);
 
-    // Add timestamp to each task list item
+    // Generate time stamp
     const now = new Date();
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const date = now.getDate();
     const month = now.getMonth();
     const year = now.getFullYear();
-    const timestamp = document.createElement('em');
-    timestamp.textContent = `${hours}:${minutes} - ${date} ${months[month]} ${year}`;
-    timestamp.classList.add('time-stamp');
-    generateContainerEl.append(timestamp);
+    const rhestrTimestamp = document.createElement('em');
+    rhestrTimestamp.classList.add('time-stamp');
+    rhestrTimestamp.textContent = `${hours}:${minutes} - ${date} ${months[month]} ${year}`;
+    rhestrListItem.append(rhestrTimestamp);
 
     // Toggle complete status indicator
-    generateRhestrListItem.addEventListener('click', () => {
-      generateRhestrListItem.classList.toggle('rhestr-complete');
+    rhestrListItemEntryDisplayInput.addEventListener('click', () => {
+      rhestrListItemEntryDisplayInput.classList.toggle('rhestr-complete');
     });
 
-    // Delete individual task items
-    deleteRhestrListItem.addEventListener('click', () => {
-      generateContainerEl.remove();
+    // Delete individual list items
+    rhestrDelete.addEventListener('click', () => {
+      rhestrListItem.remove();
     });
   };
 });
